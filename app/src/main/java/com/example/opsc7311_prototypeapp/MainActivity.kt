@@ -10,6 +10,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val intent = Intent(this, login::class.java)
+        startActivity(intent)
     }
 
     fun redirectToNavigationDrawer(view: View) {
