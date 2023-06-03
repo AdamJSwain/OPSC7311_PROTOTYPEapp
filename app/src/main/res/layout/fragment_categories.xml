@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.categories.CategoriesFragment">
+
+    <TextView
+        android:id="@+id/textViewCategoryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category Name"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editTextCategoryName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/textViewCategoryName"
+        android:layout_marginTop="8dp"
+        android:inputType="text"
+        android:hint="Enter Category Name"/>
+
+    <TextView
+        android:id="@+id/textViewCategoryColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextCategoryName"
+        android:layout_marginTop="16dp"
+        android:text="Category Color"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <Spinner
+        android:id="@+id/spinnerCategoryColor"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/textViewCategoryColor"
+        android:layout_marginTop="8dp"
+        android:labelFor="@+id/spinnerCategory"
+        android:contentDescription="Select category"/>
+
+    <Button
+        android:id="@+id/buttonCreateCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_below="@id/spinnerCategoryColor"
+        android:layout_marginTop="16dp"
+        android:text="Create Category"
+        android:backgroundTint="@color/buttonBlue"/>
+
+</RelativeLayout>

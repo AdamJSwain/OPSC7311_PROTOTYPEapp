@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/textViewHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Setting Goals"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/buttonBlue"/>
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@id/textViewHeading"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/login_logo" />
+
+    <TextView
+        android:id="@+id/textViewMinGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewLogo"
+        android:layout_marginTop="16dp"
+        android:text="Minimum Daily Goal (hours)"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editTextMinGoal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/textViewMinGoal"
+        android:layout_marginTop="8dp"
+        android:inputType="number"
+        android:hint="Enter Minimum Goal"
+        android:background="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/textViewMaxGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextMinGoal"
+        android:layout_marginTop="16dp"
+        android:text="Maximum Daily Goal (hours)"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editTextMaxGoal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/textViewMaxGoal"
+        android:layout_marginTop="8dp"
+        android:inputType="number"
+        android:hint="Enter Maximum Goal"
+        android:background="#FFFFFF" />
+
+    <Button
+        android:id="@+id/buttonSaveGoals"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_below="@id/editTextMaxGoal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Save Goals"
+        android:backgroundTint="@color/buttonBlue"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>

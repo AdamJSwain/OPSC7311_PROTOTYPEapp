@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.entries.EntriesFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewDate"
+        android:layout_marginTop="8dp"
+        android:theme="@style/CustomTimePicker"/>
+
+    <TextView
+        android:id="@+id/textViewStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/datePicker"
+        android:layout_marginTop="16dp"
+        android:text="Start Time"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <TimePicker
+        android:id="@+id/timePickerStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewStartTime"
+        android:layout_marginTop="8dp"
+        android:theme="@style/CustomTimePicker"/>
+
+    <TextView
+        android:id="@+id/textViewEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timePickerStartTime"
+        android:layout_marginTop="16dp"
+        android:text="End Time"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <TimePicker
+        android:id="@+id/timePickerEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewEndTime"
+        android:layout_marginTop="8dp"
+        android:theme="@style/CustomTimePicker"/>
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timePickerEndTime"
+        android:layout_marginTop="16dp"
+        android:text="Description"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editTextDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewDescription"
+        android:inputType="textMultiLine"
+        android:minLines="2"
+        android:gravity="top"
+        android:hint="Enter description"/>
+
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextDescription"
+        android:layout_marginTop="16dp"
+        android:text="Category"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <Spinner
+        android:id="@+id/spinnerCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewCategory"
+        android:layout_marginTop="8dp"
+        android:labelFor="@+id/spinnerCategory"
+        android:contentDescription="Select category"/>
+
+    <Button
+        android:id="@+id/buttonAddPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerCategory"
+        android:layout_marginTop="16dp"
+        android:text="Add Photo"
+        android:backgroundTint="@color/buttonBlue"/>
+
+    <ImageView
+        android:id="@+id/imageViewPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonAddPhoto"
+        android:layout_marginTop="16dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/baseline_insert_photo_24" />
+
+    <Button
+        android:id="@+id/buttonSaveEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewPhoto"
+        android:layout_marginTop="16dp"
+        android:text="Save Entry"
+        android:backgroundTint="@color/buttonBlue"/>
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

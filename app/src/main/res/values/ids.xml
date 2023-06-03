@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="textViewDate" type="id" />
+    <item name="datePicker" type="id" />
+    <item name="textViewStartTime" type="id" />
+    <item name="timePickerStartTime" type="id" />
+    <item name="textViewEndTime" type="id" />
+    <item name="timePickerEndTime" type="id" />
+    <item name="textViewDescription" type="id" />
+    <item name="editTextDescription" type="id" />
+    <item name="textViewCategory" type="id" />
+    <item name="spinnerCategory" type="id" />
+    <item name="buttonAddPhoto" type="id" />
+    <item name="imageViewPhoto" type="id" />
+    <item name="buttonSaveEntry" type="id" />
+</resources>
