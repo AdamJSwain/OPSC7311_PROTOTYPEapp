@@ -18,6 +18,7 @@ class CategoriesFragment : Fragment() {
 
     // This property is only valid between onCreateView and
     // onDestroyView.
+    // TestComment
     private val binding get() = _binding!!
     private lateinit var spinnerCategoryColor: Spinner
     private lateinit var buttonCreateCategory: Button
