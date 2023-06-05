@@ -24,9 +24,9 @@ class login : AppCompatActivity() {
         btnLogin.setOnClickListener()
         {
 
-            if (tvUsername.text.toString().equals("Admin") && tvPassword.text.toString().equals("Password"))
+            if (tvUsername.text.toString().equals("Wilhelm") && tvPassword.text.toString().equals("Boemaloem"))
             {
-                Toast.makeText(this@login, "You have successfully logged in, Welcome Admin", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@login, "You have successfully logged in, Welcome, "+tvUsername.text.toString(), Toast.LENGTH_SHORT).show()
 
                 val intent = Intent(this, NavigationDrawer::class.java)
                 startActivity(intent)
