@@ -1,6 +1,7 @@
 package com.example.opsc7311_prototypeapp.ui.categories
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,28 +17,33 @@ class CategoriesFragment : Fragment() {
     private val binding get() = _binding!!
     // This property is only valid between onCreateView and
     // onDestroyView.
-
+// identites for add and updating the list view
     private lateinit var ListCategory: ListView
     private lateinit var itemList: ArrayList<String>
     private lateinit var adapter: ArrayAdapter<String>
+    private lateinit var editTextCategoryName:EditText
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_categories, container, false)
         ListCategory = view.findViewById(R.id.ListCategory)
+        editTextCategoryName = view.findViewById(R.id.editTextCategoryName)
         itemList = ArrayList()
         adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, itemList)
         ListCategory.adapter = adapter
 
+        // adding items to the list View
         val buttonCreateCategory: Button = view.findViewById(R.id.buttonCreateCategory)
         buttonCreateCategory.setOnClickListener {
-            val newItem = "New Item"
+
+            val newItem = editTextCategoryName.text.toString()
             addItemToList(newItem)
         }
 
+        //updating the list view selected
         val ButtonUpdate: Button = view.findViewById(R.id.ButtonUpdate)
         ButtonUpdate.setOnClickListener {
             val index = 0  // Specify the index of the item to update
-            val updatedItem = "Updated Item"
+            val updatedItem = editTextCategoryName.text.toString()
             updateItemInList(index, updatedItem)
         }
 
