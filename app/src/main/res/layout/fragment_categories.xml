@@ -51,4 +51,22 @@
         android:text="Create Category"
         android:backgroundTint="@color/buttonBlue"/>
 
+    <Button
+        android:id="@+id/ButtonUpdate"
+        android:layout_width="152dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerCategoryColor"
+        android:layout_marginLeft="47dp"
+        android:layout_marginTop="18dp"
+        android:layout_toRightOf="@id/buttonCreateCategory"
+        android:backgroundTint="@color/buttonBlue"
+        android:text="Update" />
+
+    <ListView
+        android:id="@+id/ListCategory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/buttonCreateCategory"
+        android:layout_marginTop="0dp" />
+
 </RelativeLayout>
