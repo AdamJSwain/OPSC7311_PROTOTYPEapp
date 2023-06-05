@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.opsc7311_prototypeapp.databinding.FragmentGoalsBinding
@@ -25,6 +26,16 @@ class GoalsFragment : Fragment() {
 
         _binding = FragmentGoalsBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        val minGoal = binding.editTextMinGoal
+        val maxGoal = binding.editTextMaxGoal
+        val btnSave = binding.buttonSaveGoals
+
+        btnSave.setOnClickListener()
+        {
+            Toast.makeText(requireContext(), "Your minimum goal has been set to: "+minGoal.text.toString() + " hours, and your maximum goal has been set to: "
+                    + maxGoal.text.toString() + " hours",  Toast.LENGTH_SHORT).show()
+
+        }
 
         return root
     }
