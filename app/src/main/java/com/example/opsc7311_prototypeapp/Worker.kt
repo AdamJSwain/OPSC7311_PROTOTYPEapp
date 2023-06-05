@@ -5,7 +5,5 @@ class Worker {
 
    public val objectList = ArrayList<TimeSheetEntry>()
 
-    
-
 
 }
