@@ -9,7 +9,7 @@ class TimeSheetEntry {
 
     var description: String =""
 
-    var startDate = Date()
+    var startDate: String = ""
 
     var startTime: String = ""
 
@@ -20,6 +20,17 @@ class TimeSheetEntry {
             TODO()
         }
         set(value) {}
+    constructor(category: String, description: String, startDate: String, startTime: String, endTime: String)
+    {
+        this.category = category
+        this.description = description
+        this.startDate = startDate
+        this.startTime = startTime
+        this.endTime = endTime
+    }
+    override fun toString(): String {
+       return "Category: " + category + "\r\n" + "Description: " + description
+    }
 
 
 }

@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.opsc7311_prototypeapp.TimeSheetEntry
 import com.example.opsc7311_prototypeapp.Worker
 import com.example.opsc7311_prototypeapp.databinding.FragmentViewBinding
-import android.widget.AdapterView
 
 class ViewFragment : Fragment() {
 
@@ -28,11 +27,21 @@ class ViewFragment : Fragment() {
 
         val worker = Worker()
 
-        val adapter: ArrayAdapter<TimeSheetEntry>
+        val adapter: ArrayAdapter<*>
 
-        //binding.listViewEntries.adapter = ArrayAdapter<TimeSheetEntry>(this, android.R.layout.simple_list_item_1, worker.objectList)
+
+
+        worker.objectList.add(TimeSheetEntry("PROG", "Programming", "2023-01-01", "2pm", "3pm"))
+        worker.objectList.add(TimeSheetEntry("OPSC", "Open Source Coding", "2023-02-02", "2pm", "3pm"))
+        worker.objectList.add(TimeSheetEntry("INRS", "Introduction to Research", "2023-01-01", "2pm", "3pm"))
+
+
+
 
         _binding = FragmentViewBinding.inflate(inflater, container, false)
+
+        binding.listViewEntries.adapter = ArrayAdapter<TimeSheetEntry>(requireContext(), android.R.layout.simple_list_item_1, worker.objectList)
+
 
         binding.buttonSelectDate.setOnClickListener()
         {
