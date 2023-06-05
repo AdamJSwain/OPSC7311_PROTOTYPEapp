@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.opsc7311_prototypeapp.R
+import com.example.opsc7311_prototypeapp.Worker
 import com.example.opsc7311_prototypeapp.databinding.FragmentCategoriesBinding
 
 
@@ -37,6 +38,7 @@ class CategoriesFragment : Fragment() {
 
             val newItem = editTextCategoryName.text.toString()
             addItemToList(newItem)
+
         }
 
         //updating the list view selected

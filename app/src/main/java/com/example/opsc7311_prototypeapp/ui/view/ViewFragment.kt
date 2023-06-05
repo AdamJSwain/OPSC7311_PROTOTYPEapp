@@ -16,7 +16,7 @@ class ViewFragment : Fragment() {
     private var _binding: FragmentViewBinding? = null
 
     // This property is only valid between onCreateView and
-    // onDestroyView.
+    // onDestroyView
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -29,23 +29,15 @@ class ViewFragment : Fragment() {
 
         val adapter: ArrayAdapter<*>
 
-
-
         worker.objectList.add(TimeSheetEntry("PROG", "Programming", "2023-01-01", "2pm", "3pm"))
         worker.objectList.add(TimeSheetEntry("OPSC", "Open Source Coding", "2023-02-02", "2pm", "3pm"))
         worker.objectList.add(TimeSheetEntry("INRS", "Introduction to Research", "2023-01-01", "2pm", "3pm"))
 
-
-
-
         _binding = FragmentViewBinding.inflate(inflater, container, false)
-
-        binding.listViewEntries.adapter = ArrayAdapter<TimeSheetEntry>(requireContext(), android.R.layout.simple_list_item_1, worker.objectList)
-
 
         binding.buttonSelectDate.setOnClickListener()
         {
-
+            binding.listViewEntries.adapter = ArrayAdapter<TimeSheetEntry>(requireContext(), android.R.layout.simple_list_item_1, worker.objectList)
         }
         val root: View = binding.root
 
