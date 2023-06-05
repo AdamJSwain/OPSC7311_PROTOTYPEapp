@@ -28,7 +28,7 @@
                 android:layout_height="363dp"
                 android:layout_below="@id/textViewTitle"
                 android:layout_marginTop="16dp"
-                android:theme="@style/CustomTimePicker" />
+                android:theme="@style/CustomTimePicker"/>
 
             <Button
                 android:id="@+id/buttonSelectDate"
