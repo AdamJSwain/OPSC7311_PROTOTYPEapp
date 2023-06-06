@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.opsc7311_prototypeapp.R
 import com.example.opsc7311_prototypeapp.Worker
 import com.example.opsc7311_prototypeapp.databinding.FragmentCategoriesBinding
+import com.example.opsc7311_prototypeapp.ui.entries.EntriesFragment
 
 
 class CategoriesFragment : Fragment() {
@@ -39,6 +40,19 @@ class CategoriesFragment : Fragment() {
             val newItem = editTextCategoryName.text.toString()
             addItemToList(newItem)
 
+
+            val entriesFragment = EntriesFragment()
+
+            // Create a bundle and pass the entered text to it
+            val bundle = Bundle()
+            bundle.putString("enteredText", newItem)
+            entriesFragment.arguments = bundle
+
+            // Replace the current fragment with the DropdownFragment
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.spinnerCategory, entriesFragment)
+                .addToBackStack(null)
+                .commit()
         }
 
         //updating the list view selected
