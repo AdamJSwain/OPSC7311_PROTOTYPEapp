@@ -14,7 +14,10 @@ import java.util.*
 import android.content.Intent
 import android.provider.MediaStore
 import android.widget.*
-
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.opsc7311_prototypeapp.ShareViewModel
 class EntriesFragment : Fragment() {
 
     private var _binding: FragmentEntriesBinding? = null
@@ -32,6 +35,8 @@ class EntriesFragment : Fragment() {
     private lateinit var buttonSaveEntry: Button
     private lateinit var imageViewPhoto: ImageView
     private var selectedImage: Bitmap? = null
+    private val sharedViewModel: ShareViewModel by activityViewModels()
+
 
     companion object {
         private const val REQUEST_IMAGE_CAPTURE = 1
@@ -54,6 +59,11 @@ class EntriesFragment : Fragment() {
 
         buttonAddPhoto.setOnClickListener { dispatchTakePictureIntent() }
         buttonSaveEntry.setOnClickListener { submitTimesheetEntry() }
+
+
+        // Populate the dropdown bar with categories
+
+
         return view
     }
 
@@ -66,6 +76,22 @@ class EntriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         imageViewPhoto = view.findViewById(R.id.imageViewPhoto)
+        spinnerCategory = view.findViewById<Spinner>(R.id.spinnerCategory)
+
+        val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, sharedViewModel.dataList)
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerCategory.adapter = arrayAdapter
+
+        spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedItem = spinnerCategory.getItemAtPosition(position).toString()
+                sharedViewModel.selectedItem.value = selectedItem
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle when no item is selected
+            }
+        }
     }
 
 
@@ -119,5 +145,8 @@ class EntriesFragment : Fragment() {
 
 
     }
+
+
+
 }
 

@@ -28,7 +28,7 @@ class ViewFragment : Fragment() {
 
         val adapter: ArrayAdapter<*>
 
-        worker.objectList.add(TimeSheetEntry(
+        worker.TimeSheetEntry.add(TimeSheetEntry(
             "PROG",
             "Programming",
             "2023-01-01",
