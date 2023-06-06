@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.opsc7311_prototypeapp.TimeSheetEntry
 import com.example.opsc7311_prototypeapp.Worker
 import com.example.opsc7311_prototypeapp.databinding.FragmentViewBinding
@@ -29,9 +28,30 @@ class ViewFragment : Fragment() {
 
         val adapter: ArrayAdapter<*>
 
-        worker.objectList.add(TimeSheetEntry("PROG", "Programming", "2023-01-01", "2pm", "3pm"))
-        worker.objectList.add(TimeSheetEntry("OPSC", "Open Source Coding", "2023-02-02", "2pm", "3pm"))
-        worker.objectList.add(TimeSheetEntry("INRS", "Introduction to Research", "2023-01-01", "2pm", "3pm"))
+        worker.objectList.add(TimeSheetEntry(
+            "PROG",
+            "Programming",
+            "2023-01-01",
+            "2pm",
+            "3pm",
+            selectedImage
+        ))
+        worker.objectList.add(TimeSheetEntry(
+            "OPSC",
+            "Open Source Coding",
+            "2023-02-02",
+            "2pm",
+            "3pm",
+            selectedImage
+        ))
+        worker.objectList.add(TimeSheetEntry(
+            "INRS",
+            "Introduction to Research",
+            "2023-01-01",
+            "2pm",
+            "3pm",
+            selectedImage
+        ))
 
         _binding = FragmentViewBinding.inflate(inflater, container, false)
 

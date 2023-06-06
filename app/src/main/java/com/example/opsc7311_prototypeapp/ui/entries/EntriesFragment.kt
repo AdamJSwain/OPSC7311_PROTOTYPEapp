@@ -6,22 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.opsc7311_prototypeapp.R
-import com.example.opsc7311_prototypeapp.Worker
 import com.example.opsc7311_prototypeapp.databinding.FragmentEntriesBinding
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.graphics.Bitmap
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.opsc7311_prototypeapp.TimeSheetEntry
 import java.util.*
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.provider.MediaStore
 import android.widget.*
-import java.io.IOException
 
 class EntriesFragment : Fragment() {
 
@@ -38,10 +30,7 @@ class EntriesFragment : Fragment() {
     private lateinit var editTextDescription: EditText
     private lateinit var buttonAddPhoto: Button
     private lateinit var buttonSaveEntry: Button
-
-    private var selectedDate: Date? = null
-    private var selectedStartTime: Date? = null
-    private var selectedEndTime: Date? = null
+    private lateinit var imageViewPhoto: ImageView
     private var selectedImage: Bitmap? = null
 
     companion object {
@@ -74,29 +63,61 @@ class EntriesFragment : Fragment() {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
         }
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        imageViewPhoto = view.findViewById(R.id.imageViewPhoto)
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap?
             selectedImage = imageBitmap
+
+            if (selectedImage != null) {
+                imageViewPhoto.visibility = View.VISIBLE
+                imageViewPhoto.setImageBitmap(selectedImage)
+            } else {
+                imageViewPhoto.visibility = View.GONE
+                imageViewPhoto.setImageBitmap(null)
+            }
         }
     }
 
     private fun submitTimesheetEntry() {
+
         val description = editTextDescription.text.toString()
 
         val selectedCalendar = Calendar.getInstance()
         selectedCalendar.set(datePicker.year, datePicker.month, datePicker.dayOfMonth)
-        selectedDate = selectedCalendar.time
+        val selectedDate = selectedCalendar.time
 
         selectedCalendar.set(Calendar.HOUR_OF_DAY, timePickerStartTime.hour)
         selectedCalendar.set(Calendar.MINUTE, timePickerStartTime.minute)
-        selectedStartTime = selectedCalendar.time
+        val selectedStartTime = selectedCalendar.time
 
         selectedCalendar.set(Calendar.HOUR_OF_DAY, timePickerEndTime.hour)
         selectedCalendar.set(Calendar.MINUTE, timePickerEndTime.minute)
-        selectedEndTime = selectedCalendar.time
+        val selectedEndTime = selectedCalendar.time
+
+        val entry = TimeSheetEntry(
+            startDate = selectedDate,
+            startTime = selectedStartTime,
+            endTime = selectedEndTime,
+            category = spinnerCategory,
+            description = description,
+            image = selectedImage
+        )
+
+        // Add the entry to the worker class
+        com.example.opsc7311_prototypeapp.Worker().addTimesheetEntry(entry)
+
+        // Clear the input fields or perform any desired actions
+
+        editTextDescription.text.clear()
+
+
     }
 }
 
