@@ -1,4 +1,4 @@
-package com.example.opsc7311_prototypeapp.ui.entries
+package com.example.opsc7311_prototypeapp.ui.categories_view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.opsc7311_prototypeapp.Worker
-import com.example.opsc7311_prototypeapp.databinding.FragmentEntriesBinding
+import com.example.opsc7311_prototypeapp.databinding.FragmentCategoriesViewBinding
 
-class EntriesFragment : Fragment() {
+class CategoriesViewFragment : Fragment() {
 
-    private var _binding: FragmentEntriesBinding? = null
+    private var _binding: FragmentCategoriesViewBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,10 +21,9 @@ class EntriesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val galleryViewModel =
-            ViewModelProvider(this).get(GalleryViewModel::class.java)
 
-        _binding = FragmentEntriesBinding.inflate(inflater, container, false)
+
+        _binding = FragmentCategoriesViewBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         return root

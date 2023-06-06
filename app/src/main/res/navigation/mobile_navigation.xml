@@ -30,8 +30,13 @@
         tools:layout="@layout/fragment_goals" />
 
     <fragment
-        android:id="@+id/nav_view"
+        android:id="@+id/nav_entries_view"
         android:name="com.example.opsc7311_prototypeapp.ui.view.ViewFragment"
         android:label="@string/menu_view"
         tools:layout="@layout/fragment_view" />
+    <fragment
+        android:id="@+id/nav_categories_view"
+        android:name="com.example.opsc7311_prototypeapp.ui.categories_view.CategoriesViewFragment"
+        android:label="@string/menu_categories_view"
+        tools:layout="@layout/fragment_categories_view" />
 </navigation>

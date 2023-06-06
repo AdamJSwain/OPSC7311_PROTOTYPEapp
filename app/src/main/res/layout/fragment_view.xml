@@ -25,7 +25,7 @@
             <DatePicker
                 android:id="@+id/datePicker"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="363dp"
                 android:layout_below="@id/textViewTitle"
                 android:layout_marginTop="16dp"
                 android:theme="@style/CustomTimePicker"/>
@@ -59,34 +59,11 @@
                     <ListView
                         android:id="@+id/listViewEntries"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="132dp"
                         android:divider="@android:color/darker_gray"
                         android:dividerHeight="1dp" />
 
-                    <TextView
-                        android:id="@+id/textViewGoals"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Goals"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:padding="16dp"
-                        android:hint="See Goals Here"/>
 
-                    <ListView
-                        android:id="@+id/listViewGoals"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:divider="@android:color/darker_gray"
-                        android:dividerHeight="1dp" />
-
-                    <ImageView
-                        android:id="@+id/imageViewTimeEntry"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scaleType="centerCrop"
-                        android:adjustViewBounds="true"
-                        android:layout_marginTop="16dp" />
 
                 </LinearLayout>
 
