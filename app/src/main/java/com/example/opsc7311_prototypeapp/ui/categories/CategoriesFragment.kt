@@ -1,14 +1,16 @@
 package com.example.opsc7311_prototypeapp.ui.categories
 
+//this is to import the entries class
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.opsc7311_prototypeapp.R
 import com.example.opsc7311_prototypeapp.databinding.FragmentCategoriesBinding
+import com.example.opsc7311_prototypeapp.ui.entries.EntriesFragment
 
 
 class CategoriesFragment : Fragment() {
@@ -27,7 +29,7 @@ class CategoriesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_categories, container, false)
         ListCategory = view.findViewById(R.id.ListCategory)
         editTextCategoryName = view.findViewById(R.id.editTextCategoryName)
-        itemList = ArrayList()
+        itemList= ArrayList()
         adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, itemList)
         ListCategory.adapter = adapter
 
@@ -35,8 +37,27 @@ class CategoriesFragment : Fragment() {
         val buttonCreateCategory: Button = view.findViewById(R.id.buttonCreateCategory)
         buttonCreateCategory.setOnClickListener {
 
-            val newItem = editTextCategoryName.text.toString()
-            addItemToList(newItem)
+            val enteredText = editTextCategoryName.text.toString()
+            addItemToList(enteredText)
+
+            // Create an instance of the second fragment (DropdownFragment)
+            val entriesFragment = EntriesFragment()
+
+            // Create a bundle and pass the entered text to it
+            val bundle = Bundle()
+            bundle.putString("enteredText", enteredText)
+            entriesFragment.arguments = bundle
+
+            // Replace the current fragment with the DropdownFragment
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.spinnerCategory, entriesFragment)
+                .addToBackStack(null)
+                .commit()
+
+
+
+
+
         }
 
         //updating the list view selected
@@ -46,6 +67,8 @@ class CategoriesFragment : Fragment() {
             val updatedItem = editTextCategoryName.text.toString()
             updateItemInList(index, updatedItem)
         }
+
+
 
 
 
