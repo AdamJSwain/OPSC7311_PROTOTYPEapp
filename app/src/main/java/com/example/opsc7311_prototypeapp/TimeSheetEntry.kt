@@ -22,7 +22,7 @@ class TimeSheetEntry {
         }
         set(value) {}
     constructor(
-        category: Spinner,
+        category: String,
         description: String,
         startDate: Date,
         startTime: Date,

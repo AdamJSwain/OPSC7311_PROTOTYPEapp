@@ -27,7 +27,7 @@ class ViewFragment : Fragment() {
         val worker = Worker()
 
         val adapter: ArrayAdapter<*>
-
+/*
         worker.TimeSheetEntry.add(TimeSheetEntry(
             "PROG",
             "Programming",
@@ -52,8 +52,10 @@ class ViewFragment : Fragment() {
             "3pm",
             selectedImage
         ))
-
+*/
         _binding = FragmentViewBinding.inflate(inflater, container, false)
+
+        binding.listViewEntries.adapter = ArrayAdapter<TimeSheetEntry>(requireContext(), android.R.layout.simple_list_item_1, worker.objectList)
 
         binding.buttonSelectDate.setOnClickListener()
         {

@@ -15,5 +15,4 @@ class Worker {
       return TimeSheetEntry
    }
 
-
 }

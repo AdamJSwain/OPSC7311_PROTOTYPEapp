@@ -18,6 +18,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.opsc7311_prototypeapp.ShareViewModel
+import com.example.opsc7311_prototypeapp.Worker
+
 class EntriesFragment : Fragment() {
 
     private var _binding: FragmentEntriesBinding? = null
@@ -74,6 +76,7 @@ class EntriesFragment : Fragment() {
         }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
         imageViewPhoto = view.findViewById(R.id.imageViewPhoto)
         spinnerCategory = view.findViewById<Spinner>(R.id.spinnerCategory)
@@ -94,7 +97,6 @@ class EntriesFragment : Fragment() {
         }
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -110,6 +112,7 @@ class EntriesFragment : Fragment() {
             }
         }
     }
+
 
     private fun submitTimesheetEntry() {
 
@@ -131,20 +134,24 @@ class EntriesFragment : Fragment() {
             startDate = selectedDate,
             startTime = selectedStartTime,
             endTime = selectedEndTime,
-            category = spinnerCategory,
+            category = "work",
             description = description,
             image = selectedImage
         )
+        val worker = Worker()
 
         // Add the entry to the worker class
-        com.example.opsc7311_prototypeapp.Worker().addTimesheetEntry(entry)
+        worker.objectList.add(TimeSheetEntry("work", description, selectedDate, selectedStartTime, selectedEndTime, selectedImage))
 
         // Clear the input fields or perform any desired actions
+        Toast.makeText(requireContext(),"" + worker.objectList.toString(), Toast.LENGTH_SHORT).show()
 
         editTextDescription.text.clear()
 
 
     }
+
+
 
 
 
