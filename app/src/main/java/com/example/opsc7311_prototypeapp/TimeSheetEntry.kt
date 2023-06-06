@@ -10,11 +10,11 @@ class TimeSheetEntry {
 
     var description: String =""
 
-    var startDate: String = ""
+    var startDate: Date
 
-    var startTime: String = ""
+    var startTime:  Date
 
-    var endTime: String = ""
+    var endTime: Date
 
     var image: Bitmap
         get() {
@@ -32,9 +32,9 @@ class TimeSheetEntry {
     {
         this.category = category.toString()
         this.description = description
-        this.startDate = startDate.toString()
-        this.startTime = startTime.toString()
-        this.endTime = endTime.toString()
+        this.startDate = startDate
+        this.startTime = startTime
+        this.endTime = endTime
     }
     override fun toString(): String {
        return "Category: " + category + "\r\n" + "Description: " + description

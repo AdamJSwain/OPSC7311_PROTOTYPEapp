@@ -5,14 +5,14 @@ class Worker {
 
    public val objectList = ArrayList<TimeSheetEntry>()
 
-   private val timesheetEntries: MutableList<TimeSheetEntry> = mutableListOf()
+   public val TimeSheetEntry: MutableList<TimeSheetEntry> = mutableListOf()
 
    fun addTimesheetEntry(entry: TimeSheetEntry) {
-      timesheetEntries.add(entry)
+      TimeSheetEntry.add(entry)
    }
 
    fun getTimesheetEntries(): List<TimeSheetEntry> {
-      return timesheetEntries
+      return TimeSheetEntry
    }
 
 
