@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.opsc7311_prototypeapp.R
 import com.example.opsc7311_prototypeapp.databinding.FragmentEntriesBinding
 import android.graphics.Bitmap
-import com.example.opsc7311_prototypeapp.TimeSheetEntry
 import java.util.*
 import android.content.Intent
 import android.provider.MediaStore
@@ -17,8 +15,8 @@ import android.widget.*
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.opsc7311_prototypeapp.ShareViewModel
-import com.example.opsc7311_prototypeapp.Worker
+import com.example.opsc7311_prototypeapp.*
+import java.util.concurrent.TimeUnit
 
 class EntriesFragment : Fragment() {
 
@@ -138,18 +136,29 @@ class EntriesFragment : Fragment() {
         selectedCalendar.set(Calendar.MINUTE, timePickerEndTime.minute)
         val selectedEndTime = selectedCalendar.time
 
+        val differenceInMillis: Long = selectedEndTime.time - selectedStartTime.time
+        val differenceInHours: Long = TimeUnit.MILLISECONDS.toHours(differenceInMillis)
+
+        Toast.makeText(requireContext(), "The difference in time is: "+differenceInHours, Toast.LENGTH_SHORT).show()
+
+        var categoryName: String
+        categoryName = "Category"
+
         val entry = TimeSheetEntry(
             startDate = selectedDate,
             startTime = selectedStartTime,
             endTime = selectedEndTime,
-            category = "work",
+            category = categoryName,
             description = description,
             //image = selectedImage
         )
 
+        val categoryEntry = Category(categoryName, differenceInHours.toInt())
+
 
         // Add the entry to the worker class
-        Worker.objectList.add(TimeSheetEntry("work", description, selectedDate, selectedStartTime, selectedEndTime))
+        Worker.objectList.add(entry)
+        Worker.catList.add(categoryEntry)
 
         // Clear the input fields or perform any desired action
 

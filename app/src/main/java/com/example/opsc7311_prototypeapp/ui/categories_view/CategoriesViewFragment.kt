@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.opsc7311_prototypeapp.Category
+import com.example.opsc7311_prototypeapp.TimeSheetEntry
+import com.example.opsc7311_prototypeapp.Worker
 import com.example.opsc7311_prototypeapp.databinding.FragmentCategoriesViewBinding
 
 class CategoriesViewFragment : Fragment() {
@@ -16,14 +20,24 @@ class CategoriesViewFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        //binding.listViewCategories.adapter.add
         _binding = FragmentCategoriesViewBinding.inflate(inflater, container, false)
+
+        val adapter: ArrayAdapter<*>
+
+        binding.buttonShowCategories.setOnClickListener()
+        {
+            Worker.SortObjects()
+
+            binding.listViewCategories.adapter = ArrayAdapter<Category>(requireContext(), android.R.layout.simple_list_item_1, Worker.updatedObjects)
+        }
+
         val root: View = binding.root
 
         return root

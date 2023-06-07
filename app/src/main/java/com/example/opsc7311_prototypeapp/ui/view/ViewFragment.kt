@@ -27,11 +27,9 @@ class ViewFragment : Fragment() {
 
         val adapter: ArrayAdapter<*>
 
-        val worker = Worker()
-
         val date = Date(2001,1,1)
 
-       Worker.objectList.add(TimeSheetEntry("Work","OPSC",date,date,date))
+
 /*
         worker.TimeSheetEntry.add(TimeSheetEntry(
             "PROG",
