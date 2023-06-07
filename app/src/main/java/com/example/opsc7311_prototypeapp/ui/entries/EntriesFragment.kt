@@ -1,5 +1,6 @@
 package com.example.opsc7311_prototypeapp.ui.entries
 
+//All the imports needed to make the page run
 import android.app.Activity.RESULT_OK
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,36 +13,31 @@ import java.util.*
 import android.content.Intent
 import android.provider.MediaStore
 import android.widget.*
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.opsc7311_prototypeapp.*
 import java.util.concurrent.TimeUnit
 
 class EntriesFragment : Fragment() {
 
+    //All the identities called
     private var _binding: FragmentEntriesBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var spinnerCategory: Spinner
-
     private lateinit var datePicker: DatePicker
     private lateinit var timePickerStartTime: TimePicker
     private lateinit var timePickerEndTime: TimePicker
     private lateinit var editTextDescription: EditText
+    private lateinit var editTextCategory: EditText
     private lateinit var buttonAddPhoto: Button
     private lateinit var buttonSaveEntry: Button
     private lateinit var imageViewPhoto: ImageView
     private var selectedImage: Bitmap? = null
-    private val sharedViewModel: ShareViewModel by activityViewModels()
+
 
 
     companion object {
         private const val REQUEST_IMAGE_CAPTURE = 1
     }
 
+    //Create the functiosn for the entries page
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,25 +48,13 @@ class EntriesFragment : Fragment() {
         datePicker = view.findViewById(R.id.datePicker)
         timePickerStartTime = view.findViewById(R.id.timePickerStartTime)
         timePickerEndTime = view.findViewById(R.id.timePickerEndTime)
-        spinnerCategory = view.findViewById(R.id.spinnerCategory)
+        editTextCategory = view.findViewById(R.id.editTextCategory)
         editTextDescription = view.findViewById(R.id.editTextDescription)
         buttonAddPhoto = view.findViewById(R.id.buttonAddPhoto)
         buttonSaveEntry = view.findViewById(R.id.buttonSaveEntry)
 
         buttonAddPhoto.setOnClickListener { dispatchTakePictureIntent() }
         buttonSaveEntry.setOnClickListener { submitTimesheetEntry() }
-
-        val adapter: ArrayAdapter<String>
-
-        val stringArray: ArrayList<String>
-        Worker.stringList.add("OPSC7311")
-        Worker.stringList.add("INRS7321")
-        Worker.stringList.add("PROG7311")
-        Worker.stringList.add("IPMA6212")
-
-        // Populate the dropdown bar with categories
-        spinnerCategory.adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, Worker.stringList)
-
 
         return view
     }
@@ -81,28 +65,17 @@ class EntriesFragment : Fragment() {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
         }
     }
+
+    //this will allow the image taken by the user to be displayed in the imageView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
         imageViewPhoto = view.findViewById(R.id.imageViewPhoto)
-        spinnerCategory = view.findViewById<Spinner>(R.id.spinnerCategory)
 
-        val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, sharedViewModel.dataList)
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerCategory.adapter = arrayAdapter
 
-        spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedItem = spinnerCategory.getItemAtPosition(position).toString()
-                sharedViewModel.selectedItem.value = selectedItem
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Handle when no item is selected
-            }
-        }
     }
 
+    //This will allow the user to use their camera and add an image to the entries
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -120,6 +93,7 @@ class EntriesFragment : Fragment() {
     }
 
 
+    //the method is used to capture the user information
     private fun submitTimesheetEntry() {
 
         val description = editTextDescription.text.toString()
@@ -141,9 +115,11 @@ class EntriesFragment : Fragment() {
 
         Toast.makeText(requireContext(), "The difference in time is: "+differenceInHours, Toast.LENGTH_SHORT).show()
 
+        //this will allow the category enetered by the user to be seen in the view and category view page
         var categoryName: String
-        categoryName = "Category"
+        categoryName = editTextCategory.text.toString()
 
+        // This will add the entries to the timesheet class to be stored
         val entry = TimeSheetEntry(
             startDate = selectedDate,
             startTime = selectedStartTime,
@@ -153,6 +129,7 @@ class EntriesFragment : Fragment() {
             //image = selectedImage
         )
 
+        //Calculate the difference in the hours
         val categoryEntry = Category(categoryName, differenceInHours.toInt())
 
 
@@ -161,7 +138,7 @@ class EntriesFragment : Fragment() {
         Worker.catList.add(categoryEntry)
 
         // Clear the input fields or perform any desired action
-
+        editTextCategory.text.clear()
         editTextDescription.text.clear()
 
 

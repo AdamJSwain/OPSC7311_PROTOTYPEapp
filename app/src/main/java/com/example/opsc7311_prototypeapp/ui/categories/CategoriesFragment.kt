@@ -1,32 +1,29 @@
 package com.example.opsc7311_prototypeapp.ui.categories
 
+//All imports required
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.opsc7311_prototypeapp.R
 import com.example.opsc7311_prototypeapp.ShareViewModel
-import com.example.opsc7311_prototypeapp.Worker
 import com.example.opsc7311_prototypeapp.databinding.FragmentCategoriesBinding
-import com.example.opsc7311_prototypeapp.ui.entries.EntriesFragment
 
 class CategoriesFragment : Fragment() {
+
+    //all identites that have been called
 private var _binding: FragmentCategoriesBinding? = null
 private val binding get() = _binding!!
-// This property is only valid between onCreateView and
-// onDestroyView.
-// identites for add and updating the list view
 private lateinit var ListCategory: ListView
 private lateinit var itemList: ArrayList<String>
 private lateinit var adapter: ArrayAdapter<String>
 private lateinit var editTextCategoryName:EditText
 private val sharedViewModel: ShareViewModel by activityViewModels()
 
+    //Create the functions for the catergories page
 override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
     val view = binding.root
@@ -42,7 +39,6 @@ override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved
 
         val newItem = editTextCategoryName.text.toString()
         addItemToList(newItem)
-
 
     }
 

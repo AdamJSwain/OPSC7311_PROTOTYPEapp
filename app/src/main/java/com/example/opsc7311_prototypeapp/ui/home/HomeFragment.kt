@@ -1,5 +1,6 @@
 package com.example.opsc7311_prototypeapp.ui.home
 
+//imports required
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,17 +8,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.opsc7311_prototypeapp.TimeSheetEntry
-import com.example.opsc7311_prototypeapp.Worker
 import com.example.opsc7311_prototypeapp.databinding.FragmentHomeBinding
-import java.sql.Date
+
 
 class HomeFragment : Fragment() {
 
+    //all identities called
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -27,7 +24,6 @@ class HomeFragment : Fragment() {
     ): View {
         val homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

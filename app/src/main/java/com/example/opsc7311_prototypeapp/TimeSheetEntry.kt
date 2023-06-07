@@ -1,9 +1,9 @@
 package com.example.opsc7311_prototypeapp
 
 import android.graphics.Bitmap
-import android.widget.Spinner
 import java.util.Date
 
+//this class will store the entries the user puts into the entries frgament
 class TimeSheetEntry {
 
     var category: String = ""
