@@ -62,8 +62,16 @@ class EntriesFragment : Fragment() {
         buttonAddPhoto.setOnClickListener { dispatchTakePictureIntent() }
         buttonSaveEntry.setOnClickListener { submitTimesheetEntry() }
 
+        val adapter: ArrayAdapter<String>
+
+        val stringArray: ArrayList<String>
+        Worker.stringList.add("OPSC7311")
+        Worker.stringList.add("INRS7321")
+        Worker.stringList.add("PROG7311")
+        Worker.stringList.add("IPMA6212")
 
         // Populate the dropdown bar with categories
+        spinnerCategory.adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, Worker.stringList)
 
 
         return view
@@ -136,15 +144,14 @@ class EntriesFragment : Fragment() {
             endTime = selectedEndTime,
             category = "work",
             description = description,
-            image = selectedImage
+            //image = selectedImage
         )
-        val worker = Worker()
+
 
         // Add the entry to the worker class
-        worker.objectList.add(TimeSheetEntry("work", description, selectedDate, selectedStartTime, selectedEndTime, selectedImage))
+        Worker.objectList.add(TimeSheetEntry("work", description, selectedDate, selectedStartTime, selectedEndTime))
 
-        // Clear the input fields or perform any desired actions
-        Toast.makeText(requireContext(),"" + worker.objectList.toString(), Toast.LENGTH_SHORT).show()
+        // Clear the input fields or perform any desired action
 
         editTextDescription.text.clear()
 

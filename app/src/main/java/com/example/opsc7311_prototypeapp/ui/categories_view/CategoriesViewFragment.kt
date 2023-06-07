@@ -22,7 +22,7 @@ class CategoriesViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-
+        //binding.listViewCategories.adapter.add
         _binding = FragmentCategoriesViewBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.opsc7311_prototypeapp.TimeSheetEntry
 import com.example.opsc7311_prototypeapp.Worker
 import com.example.opsc7311_prototypeapp.databinding.FragmentViewBinding
+import java.sql.Date
 
 class ViewFragment : Fragment() {
 
@@ -24,9 +25,13 @@ class ViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        val adapter: ArrayAdapter<*>
+
         val worker = Worker()
 
-        val adapter: ArrayAdapter<*>
+        val date = Date(2001,1,1)
+
+       Worker.objectList.add(TimeSheetEntry("Work","OPSC",date,date,date))
 /*
         worker.TimeSheetEntry.add(TimeSheetEntry(
             "PROG",
@@ -55,11 +60,11 @@ class ViewFragment : Fragment() {
 */
         _binding = FragmentViewBinding.inflate(inflater, container, false)
 
-        binding.listViewEntries.adapter = ArrayAdapter<TimeSheetEntry>(requireContext(), android.R.layout.simple_list_item_1, worker.objectList)
+
 
         binding.buttonSelectDate.setOnClickListener()
         {
-            binding.listViewEntries.adapter = ArrayAdapter<TimeSheetEntry>(requireContext(), android.R.layout.simple_list_item_1, worker.objectList)
+            binding.listViewEntries.adapter = ArrayAdapter<TimeSheetEntry>(requireContext(), android.R.layout.simple_list_item_1, Worker.objectList)
         }
         val root: View = binding.root
 

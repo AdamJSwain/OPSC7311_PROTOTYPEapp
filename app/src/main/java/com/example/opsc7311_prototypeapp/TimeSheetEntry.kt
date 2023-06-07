@@ -27,7 +27,7 @@ class TimeSheetEntry {
         startDate: Date,
         startTime: Date,
         endTime: Date,
-        image: Bitmap?
+        //image: Bitmap?
     )
     {
         this.category = category.toString()

@@ -2,17 +2,9 @@ package com.example.opsc7311_prototypeapp
 
 class Worker {
 
+companion object{
+   public val objectList = mutableListOf<TimeSheetEntry>()
 
-   public val objectList = ArrayList<TimeSheetEntry>()
-
-   public val TimeSheetEntry: MutableList<TimeSheetEntry> = mutableListOf()
-
-   fun addTimesheetEntry(entry: TimeSheetEntry) {
-      TimeSheetEntry.add(entry)
-   }
-
-   fun getTimesheetEntries(): List<TimeSheetEntry> {
-      return TimeSheetEntry
-   }
-
+   val stringList = mutableListOf<String>()
+}
 }
