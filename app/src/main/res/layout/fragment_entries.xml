@@ -95,20 +95,20 @@
         android:textStyle="bold"
         android:textSize="16sp" />
 
-    <Spinner
-        android:id="@+id/spinnerCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewCategory"
-        android:layout_marginTop="8dp"
-        android:labelFor="@+id/spinnerCategory"
-        android:contentDescription="Select category"/>
-
+            <EditText
+                android:id="@+id/editTextCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewCategory"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:gravity="top"
+                android:hint="Enter Category"/>
     <Button
         android:id="@+id/buttonAddPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/spinnerCategory"
+        android:layout_below="@id/editTextCategory"
         android:layout_marginTop="16dp"
         android:text="Add Photo"
         android:backgroundTint="@color/buttonBlue"/>

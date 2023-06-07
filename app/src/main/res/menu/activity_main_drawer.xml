@@ -21,8 +21,12 @@
             android:icon="@drawable/baseline_star_outline_24"
             android:title="@string/menu_goals" />
         <item
-            android:id="@+id/nav_view"
+            android:id="@+id/nav_entries_view"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_view" />
+        <item
+            android:id="@+id/nav_categories_view"
+            android:icon="@drawable/baseline_remove_red_eye_24"
+            android:title="@string/menu_categories_view" />
     </group>
 </menu>

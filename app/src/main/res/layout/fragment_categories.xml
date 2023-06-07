@@ -23,32 +23,21 @@
         android:inputType="text"
         android:hint="Enter Category Name"/>
 
-    <TextView
-        android:id="@+id/textViewCategoryColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextCategoryName"
-        android:layout_marginTop="16dp"
-        android:text="Category Color"
-        android:textStyle="bold"
-        android:textSize="16sp" />
-
-    <Spinner
-        android:id="@+id/spinnerCategoryColor"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@id/textViewCategoryColor"
-        android:layout_marginTop="8dp"
-        android:labelFor="@+id/spinnerCategory"
-        android:contentDescription="Select category"/>
-
     <Button
         android:id="@+id/buttonCreateCategory"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_below="@id/spinnerCategoryColor"
+        android:layout_marginLeft="120dp"
+        android:layout_below="@id/editTextCategoryName"
         android:layout_marginTop="16dp"
         android:text="Create Category"
         android:backgroundTint="@color/buttonBlue"/>
+
+    <ListView
+        android:id="@+id/ListCategory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/buttonCreateCategory"
+        android:layout_marginTop="0dp" />
 
 </RelativeLayout>
