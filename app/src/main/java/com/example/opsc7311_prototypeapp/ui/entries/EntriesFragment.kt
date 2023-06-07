@@ -37,7 +37,7 @@ class EntriesFragment : Fragment() {
         private const val REQUEST_IMAGE_CAPTURE = 1
     }
 
-    //Create the functiosn for the entries page
+    //Create the function for the entries page
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -113,9 +113,7 @@ class EntriesFragment : Fragment() {
         val differenceInMillis: Long = selectedEndTime.time - selectedStartTime.time
         val differenceInHours: Long = TimeUnit.MILLISECONDS.toHours(differenceInMillis)
 
-        Toast.makeText(requireContext(), "The difference in time is: "+differenceInHours, Toast.LENGTH_SHORT).show()
-
-        //this will allow the category enetered by the user to be seen in the view and category view page
+        //this will allow the category entered by the user to be seen in the view and category view page
         var categoryName: String
         categoryName = editTextCategory.text.toString()
 

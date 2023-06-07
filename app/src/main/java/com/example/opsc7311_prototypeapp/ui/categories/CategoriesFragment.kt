@@ -14,7 +14,7 @@ import com.example.opsc7311_prototypeapp.databinding.FragmentCategoriesBinding
 
 class CategoriesFragment : Fragment() {
 
-    //all identites that have been called
+    //all identities that have been called
 private var _binding: FragmentCategoriesBinding? = null
 private val binding get() = _binding!!
 private lateinit var ListCategory: ListView
@@ -23,7 +23,7 @@ private lateinit var adapter: ArrayAdapter<String>
 private lateinit var editTextCategoryName:EditText
 private val sharedViewModel: ShareViewModel by activityViewModels()
 
-    //Create the functions for the catergories page
+    //Create the functions for the categories page
 override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
     val view = binding.root

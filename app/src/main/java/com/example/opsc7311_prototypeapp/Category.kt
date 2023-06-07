@@ -5,7 +5,7 @@ class Category {
     var categoryName: String = ""
     var timeSpent: Int = 0
 
-    //connstructor to store the items
+    //constructor to store the items
     constructor(catName: String, tSpent: Int)
     {
         categoryName = catName

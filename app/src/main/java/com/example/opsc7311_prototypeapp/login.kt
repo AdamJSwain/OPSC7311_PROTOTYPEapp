@@ -11,7 +11,7 @@ import android.widget.Toast
 
 class login : AppCompatActivity() {
 
-    //create the login funtion
+    //create the login function
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -23,7 +23,7 @@ class login : AppCompatActivity() {
         //this will remove the action bar
         supportActionBar!!.hide()
 
-        //the button method for when the user enters thier details
+        //the button method for when the user enters their details
         btnLogin.setOnClickListener()
         {
             if (tvUsername.text.toString().equals("Wilhelm") && tvPassword.text.toString().equals("Boemaloem"))
