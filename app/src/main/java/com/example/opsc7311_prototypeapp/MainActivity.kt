@@ -12,10 +12,12 @@ import android.widget.Toast
 import com.example.opsc7311_prototypeapp.databinding.ActivityLoginBinding
 import com.example.opsc7311_prototypeapp.databinding.ActivityMainBinding
 import com.example.opsc7311_prototypeapp.databinding.FragmentHomeBinding
+import com.example.opsc7311_prototypeapp.ui.categories.CategoriesFragment
+import com.example.opsc7311_prototypeapp.ui.entries.EntriesFragment
 import com.google.firebase.auth.FirebaseAuth
 import java.net.PasswordAuthentication
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
 
     private lateinit var firebaseAuth: FirebaseAuth
@@ -84,5 +86,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+   /* override fun onDataUpdated(data: ArrayList<String>) {
+        val spinnerFragment = supportFragmentManager.findFragmentByTag("EntriesFragment") as? EntriesFragment
+        spinnerFragment?.updateData(data)
+    }*/
 }

@@ -1,13 +1,16 @@
 package com.example.opsc7311_prototypeapp
 
 //this class will display the category and the time spent on the app
-class Category {
+data class Category (
+    val id: String? = null,
+    val name: String? = null
+        )
+{
     var categoryName: String = ""
     var timeSpent: Int = 0
 
     //constructor to store the items
-    constructor(catName: String, tSpent: Int)
-    {
+    constructor(catName: String, tSpent: Int) : this() {
         categoryName = catName
         timeSpent = tSpent
     }
