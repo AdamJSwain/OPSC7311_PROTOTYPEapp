@@ -131,17 +131,25 @@ class EntriesFragment : Fragment() {
         val entry = TimeSheetEntry(date, startTime, endTime, description, category, hoursWorked, totalPrice)
 
         // Save the entry to Firebase Realtime Database
-        val entryKey = dbRef2.push().key
-        entryKey?.let {
-            dbRef2.child(it).setValue(entry)
-                .addOnSuccessListener {
-                    Toast.makeText(context, "Timesheet entry saved successfully", Toast.LENGTH_SHORT).show()
-                    clearFields()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(context, "Failed to save timesheet entry", Toast.LENGTH_SHORT).show()
-                }
+        if(date.isNullOrEmpty() or startTime.isNullOrEmpty() or endTime.isNullOrEmpty() or endTime.isNullOrEmpty() or description.isNullOrEmpty() or category.isNullOrEmpty())
+        {
+            Toast.makeText(requireContext(), "Please ensure all fields are filled out", Toast.LENGTH_SHORT)
+
         }
+        else{
+            val entryKey = dbRef2.push().key
+            entryKey?.let {
+                dbRef2.child(it).setValue(entry)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Timesheet entry saved successfully", Toast.LENGTH_SHORT).show()
+                        clearFields()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(context, "Failed to save timesheet entry", Toast.LENGTH_SHORT).show()
+                    }
+            }
+        }
+
     }
 
     private fun calculateHoursWorked(startTime: String, endTime: String): Double {
