@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.example.opsc7311_prototypeapp.Category
 import com.example.opsc7311_prototypeapp.R
 import com.example.opsc7311_prototypeapp.TimeSheetEntry
+import com.example.opsc7311_prototypeapp.Worker
 import com.example.opsc7311_prototypeapp.databinding.FragmentEntriesBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -42,6 +43,8 @@ class EntriesFragment : Fragment() {
     private lateinit var imageViewPhoto: ImageView
     private var selectedImage: Bitmap? = null
     private lateinit var buttonTakePhoto: Button
+    val database = FirebaseDatabase.getInstance("https://opsc7311-prototypeapp-default-rtdb.europe-west1.firebasedatabase.app")
+    val entryRef = database.getReference("TimeSheetEntry")
 
     companion object {
         private const val REQUEST_IMAGE_PICK = 1
@@ -59,7 +62,7 @@ class EntriesFragment : Fragment() {
         val view = binding.root
 
         //database reference
-        dbRef2 = FirebaseDatabase.getInstance().reference.child("timesheet_entries")
+
         //calling the variables
         datePicker = binding.datePicker
         timePickerStartTime = binding.timePickerStartTime
@@ -122,8 +125,11 @@ class EntriesFragment : Fragment() {
         val startTime = formatTime(timePickerStartTime.hour, timePickerStartTime.minute)
         val endTime = formatTime(timePickerEndTime.hour, timePickerEndTime.minute)
         val description = editTextDescription.text.toString()
-        val category = categorySpinner.selectedItem.toString()
+        var category = categorySpinner.selectedItem?.toString() ?: ""
         val price = editPrice.text.toString().toDoubleOrNull() ?: 0.0
+        if(category.isNullOrEmpty()){
+            category = "Category"
+        }
 
         val hoursWorked = calculateHoursWorked(startTime, endTime)
         val totalPrice = hoursWorked * price
@@ -137,19 +143,35 @@ class EntriesFragment : Fragment() {
 
         }
         else{
-            val entryKey = dbRef2.push().key
-            entryKey?.let {
-                dbRef2.child(it).setValue(entry)
-                    .addOnSuccessListener {
-                        Toast.makeText(context, "Timesheet entry saved successfully", Toast.LENGTH_SHORT).show()
-                        clearFields()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(context, "Failed to save timesheet entry", Toast.LENGTH_SHORT).show()
-                    }
-            }
+            createEntry()
         }
 
+    }
+
+    private fun createEntry() {
+        //val category = Category(categoryName)
+        val date = formatDate(datePicker.year, datePicker.month, datePicker.dayOfMonth)
+        val startTime = formatTime(timePickerStartTime.hour, timePickerStartTime.minute)
+        val endTime = formatTime(timePickerEndTime.hour, timePickerEndTime.minute)
+        val description = editTextDescription.text.toString()
+        var category = categorySpinner.selectedItem?.toString() ?: ""
+        if(category.isNullOrEmpty()){
+            category = "Category"
+        }
+        val price = editPrice.text.toString().toDoubleOrNull() ?: 0.0
+
+        val hoursWorked = calculateHoursWorked(startTime, endTime)
+        val totalPrice = hoursWorked * price
+        val Entry = mapOf(
+            "Description" to description,
+            "Category" to category,
+            "Date" to date,
+            "Hours Worked" to hoursWorked,
+            "Price per Hours" to price,
+            "Total price of Work" to totalPrice,
+            "User ID" to Worker.userInfo
+        )
+        entryRef.push().setValue(Entry)
     }
 
     private fun calculateHoursWorked(startTime: String, endTime: String): Double {

@@ -15,12 +15,15 @@ import com.example.opsc7311_prototypeapp.databinding.FragmentHomeBinding
 import com.example.opsc7311_prototypeapp.ui.categories.CategoriesFragment
 import com.example.opsc7311_prototypeapp.ui.entries.EntriesFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import java.net.PasswordAuthentication
 
 class MainActivity : AppCompatActivity(){
 
 
     private lateinit var firebaseAuth: FirebaseAuth
+    val database = FirebaseDatabase.getInstance("https://opsc7311-prototypeapp-default-rtdb.europe-west1.firebasedatabase.app")
+    val goalRef = database.getReference("UserGoal")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +45,7 @@ class MainActivity : AppCompatActivity(){
 
         val txtLogin = findViewById<TextView>(R.id.textViewLogin)
 
+
         txtLogin.setOnClickListener() {
             val intent = Intent(this, login::class.java)
             startActivity(intent)
@@ -58,6 +62,11 @@ class MainActivity : AppCompatActivity(){
                         firebaseAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener {
                                 if (it.isSuccessful) {
+                                    val userGoal = mapOf(
+                                        "Max Goal" to 0,
+                                        "Min Goal" to 0,
+                                        "User ID" to email)
+                                    goalRef.push().setValue(userGoal)
                                     val intent = Intent(this, login::class.java)
                                     startActivity(intent)
                                 } else {

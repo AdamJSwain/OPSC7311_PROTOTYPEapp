@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.opsc7311_prototypeapp.Worker
 import com.example.opsc7311_prototypeapp.databinding.FragmentGoalsBinding
+import com.google.firebase.database.FirebaseDatabase
 
 class GoalsFragment : Fragment() {
 
@@ -15,6 +17,8 @@ class GoalsFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    val database = FirebaseDatabase.getInstance("https://opsc7311-prototypeapp-default-rtdb.europe-west1.firebasedatabase.app")
+    val goalRef = database.getReference("Goal")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,12 +36,30 @@ class GoalsFragment : Fragment() {
         //when the button is press will give a toast message and save the entries
         btnSave.setOnClickListener()
         {
-            Toast.makeText(requireContext(), "Your minimum goal has been set to: "+minGoal.text.toString() + " hours, and your maximum goal has been set to: "
-                    + maxGoal.text.toString() + " hours",  Toast.LENGTH_SHORT).show()
+
+
+            updateData(Worker.userInfo, minGoal.text.toString(), maxGoal.text.toString())
 
         }
 
         return root
+    }
+
+    private fun updateData(username: String, minimumGoal: String, maximumGoal: String) {
+        val userGoal = mapOf(
+            "Max Goal" to maximumGoal,
+            "Min Goal" to minimumGoal,
+            "User ID" to Worker.userInfo)
+
+        goalRef.child("User ID").updateChildren(userGoal).addOnCompleteListener {
+           if(it.isSuccessful){
+               Toast.makeText(requireContext(), "Your minimum goal has been set to: "+minimumGoal.toString() + " hours, and your maximum goal has been set to: "
+                       + maximumGoal.toString() + " hours",  Toast.LENGTH_SHORT).show()
+           }
+            else{
+               Toast.makeText(requireContext(), it.exception?.localizedMessage.toString(), Toast.LENGTH_SHORT).show()
+           }
+        }
     }
 
     override fun onDestroyView() {
