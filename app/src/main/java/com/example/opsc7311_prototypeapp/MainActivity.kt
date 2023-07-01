@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+
         //this will remove the action bar
         supportActionBar!!.hide()
 
@@ -62,11 +64,12 @@ class MainActivity : AppCompatActivity(){
                         firebaseAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener {
                                 if (it.isSuccessful) {
+                                    val userInfo = firebaseAuth.currentUser!!.uid
                                     val userGoal = mapOf(
                                         "Max Goal" to 0,
                                         "Min Goal" to 0,
-                                        "User ID" to email)
-                                    goalRef.push().setValue(userGoal)
+                                        "User ID" to firebaseAuth.currentUser?.uid)
+                                    goalRef.child(userInfo).updateChildren(userGoal)
                                     val intent = Intent(this, login::class.java)
                                     startActivity(intent)
                                 } else {

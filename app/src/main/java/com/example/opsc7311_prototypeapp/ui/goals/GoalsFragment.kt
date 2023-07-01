@@ -18,7 +18,7 @@ class GoalsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     val database = FirebaseDatabase.getInstance("https://opsc7311-prototypeapp-default-rtdb.europe-west1.firebasedatabase.app")
-    val goalRef = database.getReference("Goal")
+    val goalRef = database.getReference("UserGoal")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,21 +37,20 @@ class GoalsFragment : Fragment() {
         btnSave.setOnClickListener()
         {
 
-
-            updateData(Worker.userInfo, minGoal.text.toString(), maxGoal.text.toString())
+            updateData(Worker.userInfo, minGoal.text.toString().toInt(), maxGoal.text.toString().toInt())
 
         }
 
         return root
     }
 
-    private fun updateData(username: String, minimumGoal: String, maximumGoal: String) {
+    private fun updateData(username: String, minimumGoal: Int, maximumGoal: Int) {
         val userGoal = mapOf(
             "Max Goal" to maximumGoal,
             "Min Goal" to minimumGoal,
             "User ID" to Worker.userInfo)
 
-        goalRef.child("User ID").updateChildren(userGoal).addOnCompleteListener {
+        goalRef.child(Worker.userInfo).updateChildren(userGoal).addOnCompleteListener {
            if(it.isSuccessful){
                Toast.makeText(requireContext(), "Your minimum goal has been set to: "+minimumGoal.toString() + " hours, and your maximum goal has been set to: "
                        + maximumGoal.toString() + " hours",  Toast.LENGTH_SHORT).show()

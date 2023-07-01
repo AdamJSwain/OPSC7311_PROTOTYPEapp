@@ -38,7 +38,7 @@ class login : AppCompatActivity() {
                     if (it.isSuccessful) {
                         val intent = Intent(this, NavigationDrawer::class.java)
                         startActivity(intent)
-                        Worker.userInfo = email
+                        Worker.userInfo = firebaseAuth.currentUser?.uid.toString()
                     } else {
                         Toast.makeText(this, it.exception?.localizedMessage.toString(), Toast.LENGTH_SHORT).show()
                     }

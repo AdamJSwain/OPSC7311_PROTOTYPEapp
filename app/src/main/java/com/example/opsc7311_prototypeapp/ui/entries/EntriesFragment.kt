@@ -10,16 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import com.example.opsc7311_prototypeapp.Category
 import com.example.opsc7311_prototypeapp.R
 import com.example.opsc7311_prototypeapp.TimeSheetEntry
 import com.example.opsc7311_prototypeapp.Worker
 import com.example.opsc7311_prototypeapp.databinding.FragmentEntriesBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,6 +40,7 @@ class EntriesFragment : Fragment() {
     private lateinit var buttonTakePhoto: Button
     val database = FirebaseDatabase.getInstance("https://opsc7311-prototypeapp-default-rtdb.europe-west1.firebasedatabase.app")
     val entryRef = database.getReference("TimeSheetEntry")
+
 
     companion object {
         private const val REQUEST_IMAGE_PICK = 1
@@ -223,6 +219,7 @@ class EntriesFragment : Fragment() {
             }
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
