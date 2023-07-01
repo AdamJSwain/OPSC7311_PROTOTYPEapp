@@ -22,7 +22,6 @@ class CategoriesFragment : Fragment() {
 
     private lateinit var editTextCategoryName: EditText
     private lateinit var buttonCreateCategory: Button
-    private lateinit var dbRef: DatabaseReference
     val database = FirebaseDatabase.getInstance("https://opsc7311-prototypeapp-default-rtdb.europe-west1.firebasedatabase.app")
     val catRef = database.getReference("Category")
     var list = mutableListOf(String())
@@ -33,11 +32,20 @@ class CategoriesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        fetchDataButBetter(Worker.userInfo)
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         val view = binding.root
         val spinner = binding.ListCategory
+        val userID = Worker.userInfo
 
+        retrieveCategoriesByUserID(userID) { categoryNames ->
+
+            for (categoryName in categoryNames) {
+                val categorySpinner = binding.ListCategory
+                val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryNames)
+                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                categorySpinner.adapter = categoryAdapter
+            }
+        }
         val etCategoryName = view.findViewById<EditText>(R.id.editTextCategoryName)
         buttonCreateCategory = view.findViewById(R.id.buttonCreateCategory)
 
@@ -48,6 +56,15 @@ class CategoriesFragment : Fragment() {
             var categoryName = etCategoryName.text.toString()
             if (categoryName.isNotEmpty()) {
                 createCategory(categoryName)
+                retrieveCategoriesByUserID(userID) { categoryNames ->
+
+                    for (categoryName in categoryNames) {
+                        val categorySpinner = binding.ListCategory
+                        val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryNames)
+                        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        categorySpinner.adapter = categoryAdapter
+                    }
+                }
             } else {
                 Toast.makeText(requireContext(), "Please enter a category name", Toast.LENGTH_SHORT).show()
             }
@@ -68,24 +85,30 @@ class CategoriesFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-    fun fetchdata() {
-       catRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (mydata in snapshot.children) list.add(mydata.value.toString())
-                adapter?.notifyDataSetChanged()
+    fun retrieveCategoriesByUserID(userID: String, callback: (List<String>) -> Unit) {
+
+
+        val query = catRef.orderByChild("User ID").equalTo(userID)
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val categoryNames = mutableListOf<String>()
+
+                for (snapshot in dataSnapshot.children) {
+                    val categoryName = snapshot.child("Name").value as? String
+                    categoryName?.let {
+                        categoryNames.add(categoryName)
+                    }
+                }
+
+                callback(categoryNames)
             }
 
-            override fun onCancelled(error: DatabaseError) {}
+            override fun onCancelled(databaseError: DatabaseError) {
+                Toast.makeText(requireContext(), "It broken", Toast.LENGTH_SHORT)
+            }
         })
     }
-    fun fetchDataButBetter(userName: String)
-    {
-        catRef.child("Categories").orderByChild(userName).get().addOnSuccessListener {
-            list.add(it.toString())
-        }
-
-    }
-
 
     data class Category(val name: String, val timestamp: Long = Calendar.getInstance().timeInMillis)
 }

@@ -40,6 +40,7 @@ class EntriesFragment : Fragment() {
     private lateinit var buttonTakePhoto: Button
     val database = FirebaseDatabase.getInstance("https://opsc7311-prototypeapp-default-rtdb.europe-west1.firebasedatabase.app")
     val entryRef = database.getReference("TimeSheetEntry")
+    val catRef = database.getReference("Category")
 
 
     companion object {
@@ -56,7 +57,17 @@ class EntriesFragment : Fragment() {
     ): View? {
         _binding = FragmentEntriesBinding.inflate(inflater, container, false)
         val view = binding.root
+        val userID = Worker.userInfo
 
+        retrieveCategoriesByUserID(userID) { categoryNames ->
+
+            for (categoryName in categoryNames) {
+                val categorySpinner = binding.categorySpinner
+                val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryNames)
+                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                categorySpinner.adapter = categoryAdapter
+            }
+        }
         //database reference
 
         //calling the variables
@@ -129,8 +140,6 @@ class EntriesFragment : Fragment() {
 
         val hoursWorked = calculateHoursWorked(startTime, endTime)
         val totalPrice = hoursWorked * price
-
-        val entry = TimeSheetEntry(date, startTime, endTime, description, category, hoursWorked, totalPrice)
 
         // Save the entry to Firebase Realtime Database
         if(date.isNullOrEmpty() or startTime.isNullOrEmpty() or endTime.isNullOrEmpty() or endTime.isNullOrEmpty() or description.isNullOrEmpty() or category.isNullOrEmpty())
@@ -220,6 +229,30 @@ class EntriesFragment : Fragment() {
         }
     }
 
+    fun retrieveCategoriesByUserID(userID: String, callback: (List<String>) -> Unit) {
+
+
+        val query = catRef.orderByChild("User ID").equalTo(userID)
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val categoryNames = mutableListOf<String>()
+
+                for (snapshot in dataSnapshot.children) {
+                    val categoryName = snapshot.child("Name").value as? String
+                    categoryName?.let {
+                        categoryNames.add(categoryName)
+                    }
+                }
+
+                callback(categoryNames)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Toast.makeText(requireContext(), "It broken", Toast.LENGTH_SHORT)
+            }
+        })
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

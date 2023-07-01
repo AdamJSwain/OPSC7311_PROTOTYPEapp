@@ -65,7 +65,7 @@
         android:layout_marginTop="8dp"
         android:theme="@style/CustomTimePicker"/>
     <TextView
-      android:id="@+id/Billibletxt"
+      android:id="@+id/Billabletxt"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_below="@id/timePickerEndTime"
@@ -78,7 +78,7 @@
         android:id="@+id/editPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/Billibletxt"
+        android:layout_below="@id/Billabletxt"
         android:hint="Enter Price"
         android:inputType="numberDecimal"/>
 
@@ -126,16 +126,17 @@
         android:layout_marginTop="16dp"
         android:text="Add Image"
         android:backgroundTint="@color/buttonBlue"/>
-     <Button
-     android:id="@+id/buttonTakePhoto"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:layout_below="@id/categorySpinner"
-     android:layout_toRightOf="@id/buttonAddPhoto"
-     android:layout_marginLeft="16dp"
-     android:layout_marginTop="16dp"
-     android:text="Take Photot"
-     android:backgroundTint="@color/buttonBlue"/>
+
+            <Button
+                android:id="@+id/buttonTakePhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/categorySpinner"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_toRightOf="@id/buttonAddPhoto"
+                android:backgroundTint="@color/buttonBlue"
+                android:text="Take Photo" />
 
     <ImageView
         android:id="@+id/imageViewPhoto"
