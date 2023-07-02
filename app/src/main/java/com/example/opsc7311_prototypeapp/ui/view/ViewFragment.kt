@@ -47,7 +47,7 @@ class ViewFragment : Fragment() {
                 cal.set(Calendar.MONTH, monthOfYear)
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 val myFormat = "yyyy.MM.dd" // mention the format you need
-                val sdf = SimpleDateFormat(myFormat, Locale.US)
+                val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
                 textViewStart.text = sdf.format(cal.time)
 
             }
@@ -57,7 +57,7 @@ class ViewFragment : Fragment() {
                 cal.set(Calendar.MONTH, monthOfYear)
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 val myFormat = "yyyy.MM.dd" // mention the format you need
-                val sdf = SimpleDateFormat(myFormat, Locale.US)
+                val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
 
                 txtEnd.text = sdf.format((cal.time))
             }
@@ -82,11 +82,11 @@ class ViewFragment : Fragment() {
             val userID = Worker.userInfo
             val startDate = formatDate(2023, 6, 1) // Specify your start date
             val endDate = formatDate(2023, 7, 30) // Specify your end date
-            retrieveCategoriesByUserID(userID) { categoryNames ->
+            retrieveCategoriesByUserID(userID) { entryNames ->
 
-                for (categoryName in categoryNames) {
+                for (Description in entryNames) {
                     val categorySpinner = binding.listViewEntries
-                    val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, categoryNames)
+                    val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, entryNames)
                     categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     categorySpinner.adapter = categoryAdapter
                 }
@@ -104,59 +104,6 @@ class ViewFragment : Fragment() {
         return java.sql.Date(utilDate.time)
     }
 
-    fun retrieveTimeSheetEntriesByUserIDAndDateRange(
-        userID: String,
-        startDate: Date,
-        endDate: Date,
-        listView: ListView
-    ) {
-        val query = timeSheetEntriesRef.orderByChild("User ID").equalTo(userID)
-
-        query.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val timeSheetEntries = mutableListOf<TimeSheetEntry>()
-
-                for (snapshot in dataSnapshot.children) {
-                    val category = snapshot.child("Category").value as? String
-                    val dateString = snapshot.child("Date").value as? String
-                    val description = snapshot.child("Description").value as? String
-                    val hours = snapshot.child("Hours Worked").value as? Int
-                    val price = snapshot.child("Price per Hours").value as? Double
-                    val totalPrice = snapshot.child("Total price of Work").value as? Double
-
-                    if (category != null && dateString != null && description != null &&
-                        hours != null && price != null && totalPrice != null
-                    ) {
-                        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                        val date = dateFormat.parse(dateString)
-
-                        if (date != null && date >= startDate && date <= endDate) {
-                            val timeSheetEntry = TimeSheetEntry(
-                                category,
-                                dateString,
-                                description,
-                                hours,
-                                price,
-                                totalPrice,
-                                userID
-                            )
-                            timeSheetEntries.add(timeSheetEntry)
-                        }
-                    }
-                }
-
-                Log.d("ViewFragment", "Number of time sheet entries: ${timeSheetEntries.size}")
-
-                val timeSheetAdapter =
-                    ArrayAdapter(listView.context, android.R.layout.simple_list_item_1, timeSheetEntries)
-                listView.adapter = timeSheetAdapter
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e("ViewFragment", "Error retrieving time sheet entries: ${databaseError.message}")
-            }
-        })
-    }
 
     fun retrieveCategoriesByUserID(userID: String, callback: (List<String>) -> Unit) {
 

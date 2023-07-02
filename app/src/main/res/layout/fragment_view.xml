@@ -28,6 +28,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewEntries"
                 android:layout_marginStart="16dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
                 android:layout_marginTop="8dp"
                 android:theme="@style/CustomTimePicker" />
 
@@ -37,6 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtStartDate"
                 android:layout_marginStart="16dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
                 android:layout_marginTop="8dp"
                 android:theme="@style/CustomTimePicker" />
 
