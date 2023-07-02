@@ -38,6 +38,13 @@ class HomeFragment : Fragment() {
         stopButton = binding.stopButton
 
         startButton.setOnClickListener {
+            val elapsedTime = SystemClock.elapsedRealtime() - chronometer.base
+            val hours = (elapsedTime / 3600000).toInt() // Convert milliseconds to hours
+            val minutes = (elapsedTime % 3600000 / 60000).toInt() // Convert remaining milliseconds to minutes
+            val seconds = (elapsedTime % 60000 / 1000).toInt() // Convert remaining milliseconds to seconds
+
+            val timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds)
+            chronometer.text = timeString
             chronometer.base = SystemClock.elapsedRealtime()
             chronometer.start()
         }
