@@ -82,12 +82,11 @@ class ViewFragment : Fragment() {
             val userID = Worker.userInfo
             val startDate = formatDate(2023, 6, 1) // Specify your start date
             val endDate = formatDate(2023, 7, 30) // Specify your end date
-            retrieveCategoriesByUserID(userID) { entryNames ->
+            retrieveUserGoalsByUserID(timeSheetEntriesRef.orderByChild("User ID").equalTo(userID)) { list ->
 
-                for (Description in entryNames) {
+                for (usefulTimeSheetEntry in list) {
                     val categorySpinner = binding.listViewEntries
-                    val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, entryNames)
-                    categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, list)
                     categorySpinner.adapter = categoryAdapter
                 }
             }
@@ -104,31 +103,51 @@ class ViewFragment : Fragment() {
         return java.sql.Date(utilDate.time)
     }
 
+    private fun retrieveUserGoalsByUserID(userIDQuery: Query, callback: (List<usefulTimeSheetEntry>) -> Unit) {
+        val userGoalsRef = database.getReference("TimeSheetEntry")
+        userIDQuery.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // Iterate through the snapshot to get the user ID
+                val userId = snapshot.children.firstOrNull()?.key
 
-    fun retrieveCategoriesByUserID(userID: String, callback: (List<String>) -> Unit) {
 
+                println("Retrieved user ID: $userId") // Print retrieved user ID
 
-        val query = timeSheetEntriesRef.orderByChild("User ID").equalTo(userID)
+                if (userId != null) {
+                    val userGoalsQuery = userGoalsRef.child(userId)
 
-        query.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val categoryNames = mutableListOf<String>()
+                    userGoalsQuery.addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val list = mutableListOf<usefulTimeSheetEntry>()
+                            val description =
+                                snapshot.child("Description").toString()
+                            val totalPrice =
+                                snapshot.child("Total price of Work").getValue(Float::class.java)
+                                    ?: 0f
+                                    list.add(usefulTimeSheetEntry(description,totalPrice))
+                            callback(list)
+                        }
 
-                for (snapshot in dataSnapshot.children) {
-                    val categoryName = snapshot.child("Description").value.toString() as? String
-                    categoryName?.let {
-                        categoryNames.add(categoryName)
-                    }
+                        override fun onCancelled(error: DatabaseError) {
+                            // Handle error
+                        }
+                    })
+                } else {
+                    println("User ID not found") // Print user ID not found
                 }
-                callback(categoryNames)
             }
 
-            override fun onCancelled(databaseError: DatabaseError) {
+            override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(requireContext(), "It broken", Toast.LENGTH_SHORT)
             }
         })
     }
+    data class usefulTimeSheetEntry(
+    val description: String,
+    val totalPrice: Float
 
+
+    )
     data class TimeSheetEntry(
         val category: String,
         val date: String,
@@ -142,4 +161,7 @@ class ViewFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
+
 }

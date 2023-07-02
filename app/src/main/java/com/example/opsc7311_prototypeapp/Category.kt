@@ -15,7 +15,7 @@ data class Category (
         timeSpent = tSpent
     }
 
-    //this will display and aler and the item in a listview
+    //this will display and alert and the item in a listview
     override fun toString(): String {
         return "Category: " + categoryName + "\r\n" + "Time Spent: " + timeSpent
     }
