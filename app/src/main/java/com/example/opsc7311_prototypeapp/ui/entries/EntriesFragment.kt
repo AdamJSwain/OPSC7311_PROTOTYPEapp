@@ -46,7 +46,7 @@ class EntriesFragment : Fragment() {
     companion object {
         private const val REQUEST_IMAGE_PICK = 1
         private const val REQUEST_IMAGE_CAPTURE = 1
-        private const val DATE_FORMAT = "yyyy-MM-dd"
+        const val DATE_FORMAT = "yyyy-MM-dd"
         private const val TIME_FORMAT = "HH:mm"
     }
 
@@ -244,7 +244,6 @@ class EntriesFragment : Fragment() {
                         categoryNames.add(categoryName)
                     }
                 }
-
                 callback(categoryNames)
             }
 
