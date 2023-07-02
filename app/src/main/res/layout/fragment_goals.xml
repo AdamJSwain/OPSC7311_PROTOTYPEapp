@@ -69,7 +69,7 @@
         android:layout_below="@id/editTextMaxGoal"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Save Goals"
+        android:text="Update Goals"
         android:backgroundTint="@color/buttonBlue"
         android:textColor="#FFFFFF" />
 

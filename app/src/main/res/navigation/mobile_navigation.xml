@@ -10,25 +10,21 @@
         android:name="com.example.opsc7311_prototypeapp.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
-
     <fragment
         android:id="@+id/nav_entries"
         android:name="com.example.opsc7311_prototypeapp.ui.entries.EntriesFragment"
         android:label="@string/menu_entries"
         tools:layout="@layout/fragment_entries" />
-
     <fragment
         android:id="@+id/nav_categories"
         android:name="com.example.opsc7311_prototypeapp.ui.categories.CategoriesFragment"
         android:label="@string/menu_categories"
         tools:layout="@layout/fragment_categories" />
-
     <fragment
         android:id="@+id/nav_goals"
         android:name="com.example.opsc7311_prototypeapp.ui.goals.GoalsFragment"
         android:label="@string/menu_goals"
         tools:layout="@layout/fragment_goals" />
-
     <fragment
         android:id="@+id/nav_entries_view"
         android:name="com.example.opsc7311_prototypeapp.ui.view.ViewFragment"
@@ -39,4 +35,14 @@
         android:name="com.example.opsc7311_prototypeapp.ui.categories_view.CategoriesViewFragment"
         android:label="@string/menu_categories_view"
         tools:layout="@layout/fragment_categories_view" />
+    <fragment
+        android:id="@+id/nav_graph_view"
+        android:name="com.example.opsc7311_prototypeapp.ui.graph.GraphFragment"
+        android:label="@string/menu_graph_view"
+        tools:layout="@layout/fragment_graph" />
+    <fragment
+        android:id="@+id/nav_goals_view"
+        android:name="com.example.opsc7311_prototypeapp.ui.goals_view.GoalsViewFragment"
+        android:label="@string/menu_goals_view"
+        tools:layout="@layout/fragment_goals_view" />
 </navigation>
