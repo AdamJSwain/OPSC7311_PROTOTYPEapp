@@ -45,7 +45,6 @@ class CategoriesViewFragment : Fragment() {
                 val myFormat = "yyyy.MM.dd" // mention the format you need
                 val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
                 startText.text = sdf.format(cal.time)
-
             }
         val dateSetListener1 =
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
@@ -54,10 +53,8 @@ class CategoriesViewFragment : Fragment() {
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 val myFormat = "yyyy.MM.dd" // mention the format you need
                 val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
-
                 endText.text = sdf.format((cal.time))
             }
-
         startText.setOnClickListener {
             DatePickerDialog(
                 requireContext(), dateSetListener,
