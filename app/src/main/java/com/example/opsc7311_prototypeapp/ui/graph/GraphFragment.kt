@@ -84,8 +84,6 @@ class GraphFragment : Fragment() {
             val userId = userGoalsRef.orderByChild("User ID").equalTo(userID)
             retrieveUserGoalsByUserID(userId) { minimumGoal, maximumGoal ->
 
-                println("Retrieved user goals - Minimum: $minimumGoal, Maximum: $maximumGoal") // Print retrieved user goals
-
                 // Add horizontal limit lines for minimum and maximum goals
                 val minimumLimitLine = LimitLine(minimumGoal, "Minimum Goal")
                 minimumLimitLine.lineWidth = 4f
@@ -108,7 +106,6 @@ class GraphFragment : Fragment() {
             return root
         }
 
-
         // Retrieve the user's minimum and maximum goals from Firebase
         private fun retrieveUserGoalsByUserID(userIDQuery: Query, callback: (Float, Float) -> Unit) {
             val userGoalsRef = database.getReference("UserGoal")
@@ -117,8 +114,6 @@ class GraphFragment : Fragment() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     // Iterate through the snapshot to get the user ID
                     val userId = snapshot.children.firstOrNull()?.key
-
-                    println("Retrieved user ID: $userId") // Print retrieved user ID
 
                     if (userId != null) {
                         val userGoalsQuery = userGoalsRef.child(userId)
@@ -166,8 +161,6 @@ class GraphFragment : Fragment() {
                     totalHoursWorked.add(BarEntry(dayIndex.toFloat(), hoursWorked))
                     dayIndex++
                 }
-
-                println("Retrieved total hours worked: $totalHoursWorked") // Print retrieved total hours worked
 
                 callback(totalHoursWorked) //here is an issue
             }
