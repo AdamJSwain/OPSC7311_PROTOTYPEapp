@@ -33,10 +33,10 @@
         android:text="Create Category"
         android:backgroundTint="@color/buttonBlue"/>
 
-    <ListView
+    <Spinner
         android:id="@+id/ListCategory"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="61dp"
         android:layout_below="@id/buttonCreateCategory"
         android:layout_marginTop="0dp" />
 

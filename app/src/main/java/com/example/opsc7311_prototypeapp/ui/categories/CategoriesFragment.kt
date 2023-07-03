@@ -5,83 +5,110 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.example.opsc7311_prototypeapp.R
-import com.example.opsc7311_prototypeapp.ShareViewModel
+import com.example.opsc7311_prototypeapp.Worker
 import com.example.opsc7311_prototypeapp.databinding.FragmentCategoriesBinding
+import com.google.firebase.database.*
+import java.util.*
 
 class CategoriesFragment : Fragment() {
+    private var _binding: FragmentCategoriesBinding? = null
+    private val binding get() = _binding!!
 
-    //all identities that have been called
-private var _binding: FragmentCategoriesBinding? = null
-private val binding get() = _binding!!
-private lateinit var ListCategory: ListView
-private lateinit var itemList: ArrayList<String>
-private lateinit var adapter: ArrayAdapter<String>
-private lateinit var editTextCategoryName:EditText
-private val sharedViewModel: ShareViewModel by activityViewModels()
+    private lateinit var editTextCategoryName: EditText
+    private lateinit var buttonCreateCategory: Button
+    val database = FirebaseDatabase.getInstance("https://opsc7311-prototypeapp-default-rtdb.europe-west1.firebasedatabase.app")
+    val catRef = database.getReference("Category")
+    var list = mutableListOf(String())
+    var adapter: ArrayAdapter<String>? = null
 
-    //Create the functions for the categories page
-override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
-    val view = binding.root
-    ListCategory = view.findViewById(R.id.ListCategory)
-    editTextCategoryName = view.findViewById(R.id.editTextCategoryName)
-    itemList = ArrayList()
-    adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, itemList)
-    ListCategory.adapter = adapter
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        val view = binding.root
+        val spinner = binding.ListCategory
+        val userID = Worker.userInfo
 
-    // adding items to the list View
-    val buttonCreateCategory: Button = view.findViewById(R.id.buttonCreateCategory)
-    buttonCreateCategory.setOnClickListener {
+        retrieveCategoriesByUserID(userID) { categoryNames ->
 
-        val newItem = editTextCategoryName.text.toString()
-        addItemToList(newItem)
+            for (categoryName in categoryNames) {
+                val categorySpinner = binding.ListCategory
+                val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryNames)
+                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                categorySpinner.adapter = categoryAdapter
+            }
+        }
+        val etCategoryName = view.findViewById<EditText>(R.id.editTextCategoryName)
+        buttonCreateCategory = view.findViewById(R.id.buttonCreateCategory)
 
+        adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, list)
+        spinner.adapter
+
+        buttonCreateCategory.setOnClickListener {
+            var categoryName = etCategoryName.text.toString()
+            if (categoryName.isNotEmpty()) {
+                createCategory(categoryName)
+                retrieveCategoriesByUserID(userID) { categoryNames ->
+
+                    for (categoryName in categoryNames) {
+                        val categorySpinner = binding.ListCategory
+                        val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryNames)
+                        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        categorySpinner.adapter = categoryAdapter
+                    }
+                }
+            } else {
+                Toast.makeText(requireContext(), "Please enter a category name", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        return view
     }
 
-
-    return view
-}
-
-// Add items to the ListView
-private fun addItemToList(item: String) {
-    itemList.add(item)
-    adapter.notifyDataSetChanged()
-
-}
-override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-
-    ListCategory = view.findViewById(R.id.ListCategory)
-
-    sharedViewModel.selectedItem.observe(viewLifecycleOwner) { selectedItem ->
-        // Update the ListView based on the selected item
-        // For example, filter the list or fetch new data
-        updateListView(selectedItem)
-    }
-}
-
-private fun updateListView(selectedItem: String) {
-    // Replace this with your logic to update the ListView based on the selected item
-    val dataList = getDataForSelectedItem(selectedItem)
-
-    val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, dataList)
-    ListCategory.adapter = adapter
-}
-
-private fun getDataForSelectedItem(selectedItem: String): List<String> {
-    // Replace this with your logic to fetch or filter the data based on the selected item
-    // For example, return a filtered list based on the selected item
-    return when (selectedItem) {
-        "Option 1" -> listOf("Item 1", "Item 2", "Item 3")
-        "Option 2" -> listOf("Item 4", "Item 5", "Item 6")
-        "Option 3" -> listOf("Item 7", "Item 8", "Item 9")
-        else -> emptyList()
+    private fun createCategory(categoryName: String) {
+        //val category = Category(categoryName)
+         val Category = mapOf(
+             "Name" to categoryName,
+         "User ID" to Worker.userInfo)
+        catRef.push().setValue(Category)
     }
 
-}
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+    fun retrieveCategoriesByUserID(userID: String, callback: (List<String>) -> Unit) {
 
+
+        val query = catRef.orderByChild("User ID").equalTo(userID)
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val categoryNames = mutableListOf<String>()
+
+                for (snapshot in dataSnapshot.children) {
+                    val categoryName = snapshot.child("Name").value as? String
+                    categoryName?.let {
+                        categoryNames.add(categoryName)
+                    }
+                }
+
+                callback(categoryNames)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Toast.makeText(requireContext(), "It broken", Toast.LENGTH_SHORT)
+            }
+        })
+    }
+
+    data class Category(val name: String, val timestamp: Long = Calendar.getInstance().timeInMillis)
 }

@@ -64,12 +64,29 @@
         android:layout_below="@id/textViewEndTime"
         android:layout_marginTop="8dp"
         android:theme="@style/CustomTimePicker"/>
+    <TextView
+      android:id="@+id/Billabletxt"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/timePickerEndTime"
+      android:layout_marginTop="16dp"
+      android:text="Enter price of hours worked"
+      android:textStyle="bold"
+      android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Billabletxt"
+        android:hint="Enter Price"
+        android:inputType="numberDecimal"/>
 
     <TextView
         android:id="@+id/textViewDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/timePickerEndTime"
+        android:layout_below="@id/editPrice"
         android:layout_marginTop="16dp"
         android:text="Description"
         android:textStyle="bold"
@@ -95,23 +112,31 @@
         android:textStyle="bold"
         android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/editTextCategory"
+            <Spinner
+                android:id="@+id/categorySpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewCategory"
-                android:inputType="textMultiLine"
-                android:minLines="2"
-                android:gravity="top"
-                android:hint="Enter Category"/>
+                android:gravity="top" />
     <Button
         android:id="@+id/buttonAddPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextCategory"
+        android:layout_below="@id/categorySpinner"
         android:layout_marginTop="16dp"
-        android:text="Add Photo"
+        android:text="Add Image"
         android:backgroundTint="@color/buttonBlue"/>
+
+            <Button
+                android:id="@+id/buttonTakePhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/categorySpinner"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_toRightOf="@id/buttonAddPhoto"
+                android:backgroundTint="@color/buttonBlue"
+                android:text="Take Photo" />
 
     <ImageView
         android:id="@+id/imageViewPhoto"

@@ -14,4 +14,6 @@
     <string name="menu_goals">Goals</string>
     <string name="menu_view">View Entries</string>
     <string name="menu_categories_view">View Categories</string>
+    <string name="menu_graph_view">View Graph</string>
+    <string name="menu_goals_view">View Goals</string>
 </resources>
